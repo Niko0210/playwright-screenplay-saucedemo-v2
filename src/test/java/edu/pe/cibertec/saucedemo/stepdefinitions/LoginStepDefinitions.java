@@ -4,13 +4,14 @@ import edu.pe.cibertec.saucedemo.questions.TheErrorMessage;
 import edu.pe.cibertec.saucedemo.questions.ThePageTitle;
 import edu.pe.cibertec.saucedemo.tasks.LoginAs;
 import edu.pe.cibertec.saucedemo.tasks.OpenTheLoginPage;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.playwright.abilities.BrowseTheWebWithPlaywright;
-
+import edu.pe.cibertec.saucedemo.tasks.VerificarSesion;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.Matchers.*;
 
@@ -54,6 +55,34 @@ public class LoginStepDefinitions {
     @Then("she should remain on the login page")
     public void shouldRemainOnTheLoginPage() {
 
+    }
+
+    @Then("the page load time should be greater than {int} milliseconds")
+    public void thePageLoadTimeShouldBeGreaterThan(Integer milliseconds) {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                VerificarSesion.pageLoadGreaterThan(milliseconds)
+        );
+    }
+
+    @And("she navigates to the cart page")
+    public void sheNavigatesToTheCartPage() {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                VerificarSesion.goToCart()
+        );
+    }
+
+    @And("she navigates back to the inventory page")
+    public void sheNavigatesBackToTheInventoryPage() {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                VerificarSesion.backToInventory()
+        );
+    }
+
+    @Then("she should still be logged in")
+    public void sheShouldStillBeLoggedIn() {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                VerificarSesion.verifySession()
+        );
     }
 
 }
